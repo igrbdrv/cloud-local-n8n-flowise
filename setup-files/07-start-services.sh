@@ -13,16 +13,21 @@ if [ ! -f "flowise-docker-compose.yaml" ]; then
   exit 1
 fi
 
+if [ ! -f "caddy-docker-compose.yaml" ]; then
+  echo "ERROR: File caddy-docker-compose.yaml not found"
+  exit 1
+fi
+
 if [ ! -f ".env" ]; then
   echo "ERROR: File .env not found"
   exit 1
 fi
 
-# Start n8n and Caddy
-echo "Starting n8n and Caddy..."
+# Start n8n
+echo "Starting n8n..."
 sudo docker compose -f n8n-docker-compose.yaml up -d
 if [ $? -ne 0 ]; then
-  echo "ERROR: Failed to start n8n and Caddy"
+  echo "ERROR: Failed to start n8n"
   exit 1
 fi
 
@@ -33,6 +38,14 @@ sleep 5
 # Check if app-network was created
 if ! sudo docker network inspect app-network &> /dev/null; then
   echo "ERROR: Failed to create app-network"
+  exit 1
+fi
+
+# Start Caddy
+echo "Starting Caddy..."
+sudo docker compose -f caddy-docker-compose.yaml up -d
+if [ $? -ne 0 ]; then
+  echo "ERROR: Failed to start Caddy"
   exit 1
 fi
 

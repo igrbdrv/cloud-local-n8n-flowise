@@ -69,8 +69,9 @@ Login credentials will be displayed at the end of the installation process.
   - `04-generate-secrets.sh` - secret key generation
   - `05-create-templates.sh` - configuration file creation
   - `06-setup-firewall.sh` - firewall setup
-  - `07-start-services.sh` - service launch
-- `n8n-docker-compose.yaml.template` - docker-compose template for n8n and Caddy
+- `07-start-services.sh` - service launch
+- `n8n-docker-compose.yaml.template` - docker-compose template for n8n
+- `caddy-docker-compose.yaml.template` - docker-compose template for Caddy
 - `flowise-docker-compose.yaml.template` - docker-compose template for Flowise
 
 ## Managing services
@@ -79,6 +80,7 @@ Login credentials will be displayed at the end of the installation process.
 
 ```bash
 docker compose -f n8n-docker-compose.yaml restart
+docker compose -f caddy-docker-compose.yaml restart
 docker compose -f flowise-docker-compose.yaml restart
 ```
 
@@ -86,6 +88,7 @@ docker compose -f flowise-docker-compose.yaml restart
 
 ```bash
 docker compose -f n8n-docker-compose.yaml down
+docker compose -f caddy-docker-compose.yaml down
 docker compose -f flowise-docker-compose.yaml down
 ```
 
@@ -93,6 +96,7 @@ docker compose -f flowise-docker-compose.yaml down
 
 ```bash
 docker compose -f n8n-docker-compose.yaml logs
+docker compose -f caddy-docker-compose.yaml logs
 docker compose -f flowise-docker-compose.yaml logs
 ```
 
