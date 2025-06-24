@@ -121,13 +121,15 @@ main() {
   echo "pointing to the IP address of this server."
   echo ""
   echo "To edit the configuration, use the following files:"
-  echo "- n8n-docker-compose.yaml (n8n and Caddy configuration)"
+  echo "- n8n-docker-compose.yaml (n8n configuration)"
+  echo "- caddy-docker-compose.yaml (Caddy configuration)"
   echo "- flowise-docker-compose.yaml (Flowise configuration)"
   echo "- .env (environment variables for all services)"
   echo "- Caddyfile (reverse proxy settings)"
   echo ""
   echo "To restart services, execute the commands:"
   echo "docker compose -f n8n-docker-compose.yaml restart"
+  echo "docker compose -f caddy-docker-compose.yaml restart"
   echo "docker compose -f flowise-docker-compose.yaml restart"
 }
 

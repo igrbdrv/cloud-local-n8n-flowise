@@ -20,9 +20,6 @@ version: '3'
 volumes:
   n8n_data:
     external: true
-  caddy_data:
-    external: true
-  caddy_config:
 
 services:
   n8n:
@@ -41,20 +38,6 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
       - /opt/n8n/files:/files
-    networks:
-      - app-network
-
-  caddy:
-    image: caddy:2
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /opt/n8n/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
     networks:
       - app-network
 
@@ -102,6 +85,43 @@ else
   echo "Template flowise-docker-compose.yaml.template already exists"
 fi
 
+if [ ! -f "caddy-docker-compose.yaml.template" ]; then
+  echo "Creating template caddy-docker-compose.yaml.template..."
+  cat > caddy-docker-compose.yaml.template << EOL
+version: '3'
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /opt/n8n/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+EOL
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to create file caddy-docker-compose.yaml.template"
+    exit 1
+  fi
+else
+  echo "Template caddy-docker-compose.yaml.template already exists"
+fi
+
 # Copy templates to working files
 cp n8n-docker-compose.yaml.template n8n-docker-compose.yaml
 if [ $? -ne 0 ]; then
@@ -112,6 +132,12 @@ fi
 cp flowise-docker-compose.yaml.template flowise-docker-compose.yaml
 if [ $? -ne 0 ]; then
   echo "ERROR: Failed to copy flowise-docker-compose.yaml.template to working file"
+  exit 1
+fi
+
+cp caddy-docker-compose.yaml.template caddy-docker-compose.yaml
+if [ $? -ne 0 ]; then
+  echo "ERROR: Failed to copy caddy-docker-compose.yaml.template to working file"
   exit 1
 fi
 

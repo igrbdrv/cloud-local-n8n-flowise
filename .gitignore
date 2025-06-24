@@ -37,4 +37,5 @@ temp/
 # Generated files
 n8n-docker-compose.yaml
 flowise-docker-compose.yaml
-Caddyfile 
+Caddyfile
+caddy-docker-compose.yaml

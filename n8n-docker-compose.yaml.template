@@ -3,9 +3,6 @@ version: '3'
 volumes:
   n8n_data:
     external: true
-  caddy_data:
-    external: true
-  caddy_config:
 
 services:
   n8n:
@@ -33,19 +30,6 @@ services:
     networks:
       - app-network
 
-  caddy:
-    image: caddy:2
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /opt/n8n/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    networks:
-      - app-network
 
 networks:
   app-network:
