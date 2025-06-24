@@ -73,6 +73,11 @@ Login credentials will be displayed at the end of the installation process.
 - `n8n-docker-compose.yaml.template` - docker-compose template for n8n
 - `caddy-docker-compose.yaml.template` - docker-compose template for Caddy
 - `flowise-docker-compose.yaml.template` - docker-compose template for Flowise
+- `update-all.sh` - update all services
+- `update-files/` - directory with update scripts:
+  - `update-n8n.sh` - update n8n
+  - `update-flowise.sh` - update Flowise
+  - `update-caddy.sh` - update Caddy
 
 ## Managing services
 
@@ -98,6 +103,18 @@ docker compose -f flowise-docker-compose.yaml down
 docker compose -f n8n-docker-compose.yaml logs
 docker compose -f caddy-docker-compose.yaml logs
 docker compose -f flowise-docker-compose.yaml logs
+```
+
+### Updating services
+
+Update scripts are stored in the `update-files/` directory. You can update a
+single service or all of them at once:
+
+```bash
+./update-files/update-n8n.sh      # update only n8n
+./update-files/update-flowise.sh  # update only Flowise
+./update-files/update-caddy.sh    # update only Caddy
+./update-all.sh                   # update everything
 ```
 
 ## Security
